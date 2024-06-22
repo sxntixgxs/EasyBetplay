@@ -34,14 +34,53 @@ public class viewTeam {
                     break;
 
                 case 2:
-
+              
+                    String codigoEq = null;
+                    Team ek = new Team();
+                    System.out.println("Ingrese el codigo del equipo a actualizar: ");      
+                    codigoEq = scanner.nextLine();
+                    ek = controlador.equipos.get(codigoEq);
+                    System.out.println("Modificando ... " + ek.getNombre());
+                    System.out.println("1.Actualizar nombre de equipo");
+                    System.out.println("2.Actualizar ciudad del equipo");
+                    int election = scanner.nextInt();
+                    switch (election) {
+                        case 1:
+                            System.out.println("Ingrese el nuevo nombre del equipo: ");
+                            scanner.nextLine();
+                            String newName = scanner.nextLine();
+                            ek.setNombre(newName);
+                            System.out.println("Nombre actualizado a "+newName+"!");
+                            break;
+                        case 2:
+                            System.out.println("Ingrese la nueva ciudad: ");
+                            String newCity = scanner.nextLine();
+                            ek.setCiudad(newCity);
+                            System.out.println("Ciudad actualizada a "+newCity+"!");
+                        case 3://añadir entrenador
+                            break;
+                        case 4://añadir jugador
+                            break;
+                        case 5: //añadir masajista
+                            break;
+                        case 6://eliminar entrenador
+                            break;
+                        case 7://eliminar jugador
+                            break;
+                        case 8: //eliminar masajista
+                            break;
+                        default:
+                            break;
+                    }
                     break;
 
                 case 3:
                     Team eq = new Team();
-                    String codigoE = "001";
+                    String codigoE = null;
+                    System.out.println("Ingrese el codigo del equipo:");
+                    codigoE = scanner.nextLine();
                     eq = controlador.equipos.get(codigoE);
-                    System.out.println("Mi equipo" + eq.getNombre());
+                    System.out.println("Mi equipo " + eq.getNombre());
                     break;
                 case 4:
 
