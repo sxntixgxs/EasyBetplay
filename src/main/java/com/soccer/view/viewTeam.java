@@ -41,9 +41,10 @@ public class viewTeam {
                     codigoEq = scanner.nextLine();
                     ek = controlador.equipos.get(codigoEq);
                     System.out.println("Modificando ... " + ek.getNombre());
-                    System.out.println("1.Actualizar nombre de equipo");
-                    System.out.println("2.Actualizar ciudad del equipo");
+                    System.out.println("1. Actualizar nombre de equipo");
+                    System.out.println("2. Actualizar ciudad del equipo");
                     System.out.println("3. Actualizar plantilla de entrenadores");
+                    System.out.println("4. Añadir jugador");
                     int election = scanner.nextInt();
                     switch (election) {
                         case 1: //modificar nombre equipo
@@ -117,6 +118,44 @@ public class viewTeam {
 
                             break;
                         case 4://añadir jugador
+                            //Pedimos los datos para crear la instancia de Player
+                            System.out.println("Registrando jugador... \nPor favor complete los siguientes datos: ");
+                            Random random = new Random();
+                            int idP = random.nextInt();
+                            String nombreP;
+                            System.out.println("Ingrese el nombre del jugador: ");
+                            scanner.nextLine();
+                            nombreP = scanner.nextLine();
+                            System.out.println("Ingrese el apellido del jugador: ");
+                            String apellidoP = scanner.nextLine();
+                            System.out.println("Ingrese la edad del jugador: ");
+                            int edadP = scanner.nextInt();
+                            System.out.println("Ingrese el dorsal del jugador: ");
+                            int dorsalP = scanner.nextInt();
+                            System.out.println("Ingrese la posición del jugador: ");
+                            String posicionP = scanner.nextLine();
+                            // Player jugador = new Player();
+                            //Confirmar datos
+                            int confirmar = 0;
+                            System.out.println("Estos fueron los datos ingresados: \nNombre: "+nombreP+" "+apellidoP+"\nEdad: "+edadP+"\nDorsal: "+dorsalP+"\nPosición: "+posicionP);
+                            System.out.println("1. Confirmar datos\n2. Modificar Datos\n3. Salir de este menú");
+                            confirmar = scanner.nextInt();
+                            switch (confirmar) {
+                                case 1:
+
+                                    try {
+                                        Player jugador = new Player(idP,nombreP,apellidoP,edadP,dorsalP,posicionP);
+                                        ek.setLstJugadores(jugador);
+                                        System.out.println(nombreP+" "+apellidoP+"\nAñadido con éxito!");
+                                    } catch (Exception e) {
+                                        System.out.println("Hubo un error añadiendo al jugador\nIntente de nuevo");
+                                    }
+                                    break;
+                                case 2:
+                                    continue;
+                                default:
+                                    break;
+                            }
                             break;
                         case 5: //añadir masajista
                             break;
