@@ -1,9 +1,9 @@
 package com.soccer.view;
 
+import java.util.*;
 import java.util.Scanner;
-
+import com.soccer.model.entity.*;
 import com.soccer.Controller;
-import com.soccer.model.entity.Team;
 
 public class viewTeam {
     public static Controller controlador;
@@ -21,7 +21,7 @@ public class viewTeam {
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case 1:
+                case 1: //crear equipo
                         Team equipo = new Team();
                         String codigoEquipo = null;
                         System.out.println("Ingrese el codigo del equipo :");
@@ -33,7 +33,7 @@ public class viewTeam {
                         controlador.equipos.put(codigoEquipo, equipo);
                     break;
 
-                case 2:
+                case 2: //actualizar equipo
               
                     String codigoEq = null;
                     Team ek = new Team();
@@ -43,21 +43,78 @@ public class viewTeam {
                     System.out.println("Modificando ... " + ek.getNombre());
                     System.out.println("1.Actualizar nombre de equipo");
                     System.out.println("2.Actualizar ciudad del equipo");
+                    System.out.println("3. Actualizar plantilla de entrenadores");
                     int election = scanner.nextInt();
                     switch (election) {
-                        case 1:
+                        case 1: //modificar nombre equipo
                             System.out.println("Ingrese el nuevo nombre del equipo: ");
                             scanner.nextLine();
                             String newName = scanner.nextLine();
                             ek.setNombre(newName);
                             System.out.println("Nombre actualizado a "+newName+"!");
                             break;
-                        case 2:
+                        case 2: // modificar ciudad
                             System.out.println("Ingrese la nueva ciudad: ");
+                            scanner.nextLine();
                             String newCity = scanner.nextLine();
                             ek.setCiudad(newCity);
                             System.out.println("Ciudad actualizada a "+newCity+"!");
                         case 3://añadir entrenador
+                            System.out.println("Añadiendo / modificando entrenadores de "+ek.getNombre()+" ...");
+                            scanner.nextLine();
+                            List<Coach> entrenadores = ek.getLstEntrenadores();
+                            int contador = 0;
+
+                            if(entrenadores.size()>0){
+                                System.out.println("Esta es la plantilla actual de entrenadores: ");
+                                for (Coach coach : entrenadores) {
+                                    System.out.println("Nombre: "+coach.getNombre()+" "+coach.getApellido()+"\nEdad: "+coach.getEdad()+"\nFederacion: "+coach.getIdFederacion());//para acceder a los datos hay que usar los getters !
+                                }
+                            }
+                            while(contador!=-1){
+                                System.out.println("Insertar los datos requeridos para añadir entrenador... ");
+                                scanner.nextLine();
+                                System.out.println("Ingrese nombre del entrenador: ");
+                                String nombreC = scanner.nextLine();
+                                System.out.println("Ingrese apellido del entrenador: ");
+                                String apellidoC = scanner.nextLine();
+                                System.out.println("Ingrese edad del entrenador: ");
+                                int edadC = scanner.nextInt();
+                                System.out.println("Ingrese el id de la federación: ");
+                                int idFederacionC = scanner.nextInt();
+                                System.out.println("Estos son los datos ingresados: ");
+                                System.out.println("Nombre: "+nombreC+" "+apellidoC+"\nEdad: "+edadC+"\nidFederacion: "+idFederacionC);
+                                System.out.println("1. Confirmo datos");
+                                System.out.println("2. Modificar datos");
+                                System.out.println("3. Salir de este menú.");
+                                int check = scanner.nextInt();
+                                switch (check) {
+                                    case 1:
+                                        Random random = new Random();
+                                        int idC = random.nextInt();
+                                        Coach entrenador = new Coach(idC, nombreC, apellidoC, edadC, idFederacionC);
+                                        ek.setLstEntrenadores(entrenador);
+                                        System.out.println("Datos registrados con exito! ");
+                                        int continuar = 0;
+                                        scanner.nextLine();
+                                        System.out.println("Desea añadir más entrenadores?\n1. Sí\n2. No");
+                                        continuar = scanner.nextInt();
+                                        if(continuar==1){
+                                            continue;
+                                        }else{
+                                            contador=-1;
+                                        }
+                                    case 2:{
+                                        continue;
+                                    }
+                                    case 3:
+                                        contador=-1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
                             break;
                         case 4://añadir jugador
                             break;
@@ -74,23 +131,51 @@ public class viewTeam {
                     }
                     break;
 
-                case 3:
+                case 3: //buscar equipo
                     Team eq = new Team();
                     String codigoE = null;
                     System.out.println("Ingrese el codigo del equipo:");
                     codigoE = scanner.nextLine();
                     eq = controlador.equipos.get(codigoE);
-                    System.out.println("Mi equipo " + eq.getNombre());
-                    break;
-                case 4:
+                    try {
+                        System.out.println("Mi equipo " + eq.getNombre());
+                    } catch (Exception e) {
+                        System.out.println("Sin registros ...");
+                    }
 
                     break;
-
-                case 5:
-
+                case 4: //eliminar equipo
+                    //usamos null para vaciar esa instancia de la calse equipo
+                    String codigoBor = null;
+                    Team bo = new Team();
+                    int conf = 0;
+                    System.out.println("Ingrese el codigo del equipo a eliminar: ");      
+                    codigoBor = scanner.nextLine();
+                    bo = controlador.equipos.get(codigoBor);
+                    if (bo != null) {
+                        System.out.println("Eliminando "+bo.getNombre()+" ...\n1. Confirmar\n2. Cancelar");
+                        conf = scanner.nextInt();
+                        if (conf==1) {
+                            // bo = null;
+                            controlador.equipos.remove(codigoBor);
+                            System.out.println("Eliminado con exito!");
+                        }else{
+                            System.out.println("Abortando...");
+                        }
+                    }
                     break;
 
-                case 6:
+                case 5: //listar todos los equipo
+                    // Cómo imprimir un hashtable !! 
+                    Enumeration<String> keys = controlador.equipos.keys();
+                    while (keys.hasMoreElements()) {
+                        String key = keys.nextElement();
+                        System.out.println(controlador.equipos.get(key).getNombre()+"\tCiudad: "+controlador.equipos.get(key).getCiudad());
+                        scanner.nextLine();
+                    }
+                    break;
+
+                case 6: //salir
                     scanner.close();
                     System.exit(0);
                     break;
