@@ -1,5 +1,5 @@
 package com.soccer.view;
 
-public class viewCoach {
+public class ViewDoctor {
 
 }
