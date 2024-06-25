@@ -36,6 +36,7 @@ public class viewTeam {
                 case 2: //actualizar equipo
               
                     String codigoEq = null;
+                    int confirmar = 0;
                     Team ek = new Team();
                     System.out.println("Ingrese el codigo del equipo a actualizar: ");      
                     codigoEq = scanner.nextLine();
@@ -45,6 +46,10 @@ public class viewTeam {
                     System.out.println("2. Actualizar ciudad del equipo");
                     System.out.println("3. Actualizar plantilla de entrenadores");
                     System.out.println("4. Añadir jugador");
+                    System.out.println("5. Añadir masajista");
+                    System.out.println("6. Eliminar entrenador");
+                    System.out.println("7. Eliminar jugador");
+                    System.out.println("8. Eliminar médico");
                     int election = scanner.nextInt();
                     switch (election) {
                         case 1: //modificar nombre equipo
@@ -64,6 +69,8 @@ public class viewTeam {
                             System.out.println("Añadiendo / modificando entrenadores de "+ek.getNombre()+" ...");
                             scanner.nextLine();
                             List<Coach> entrenadores = ek.getLstEntrenadores();
+                            List<Player> jugadores = ek.getLstJugadores();
+                            List<Doctor> medicos = ek.getLstMasajistas();
                             int contador = 0;
 
                             if(entrenadores.size()>0){
@@ -136,7 +143,7 @@ public class viewTeam {
                             String posicionP = scanner.nextLine();
                             // Player jugador = new Player();
                             //Confirmar datos
-                            int confirmar = 0;
+                            confirmar = 0;
                             System.out.println("Estos fueron los datos ingresados: \nNombre: "+nombreP+" "+apellidoP+"\nEdad: "+edadP+"\nDorsal: "+dorsalP+"\nPosición: "+posicionP);
                             System.out.println("1. Confirmar datos\n2. Modificar Datos\n3. Salir de este menú");
                             confirmar = scanner.nextInt();
@@ -158,12 +165,136 @@ public class viewTeam {
                             }
                             break;
                         case 5: //añadir masajista
+                            //Pedimos los datos para crear la instancia de Medico/Doctor/Masajista
+                            Random random1 = new Random();
+                            System.out.println("Registrando medico... \nPor favor complete los siguientes datos: ");
+                            int idM = random1.nextInt();
+                            String nombreM;
+                            System.out.println("Ingrese el nombre del médico: ");
+                            scanner.nextLine();
+                            nombreM = scanner.nextLine();
+                            System.out.println("Ingrese el apellido del médico: ");
+                            String apellidoM = scanner.nextLine();
+                            System.out.println("Ingrese la edad del médico: ");
+                            int edadM = scanner.nextInt();
+                            System.out.println("Ingrese el título del médico: ");
+                            String tituloM = scanner.nextLine();
+                            System.out.println("Ingrese los años de experiencia del médico: ");
+                            int expYear = scanner.nextInt();
+                            //Confirmar datos
+                            confirmar = 0;
+                            System.out.println("Estos fueron los datos ingresados: \nNombre: "+nombreM+" "+apellidoM+"\nEdad: "+edadM+"\nDorsal: "+tituloM+"\nPosición: "+expYear);
+                            System.out.println("1. Confirmar datos\n2. Modificar Datos\n3. Salir de este menú");
+                            confirmar = scanner.nextInt();
+                            switch (confirmar) {
+                                case 1:
+
+                                    try {
+                                        Doctor doctor = new Doctor(idM,nombreM,apellidoM,edadM,tituloM,expYear);
+                                        ek.setLstMasajistas(doctor);
+                                        System.out.println(nombreM+" "+apellidoM+"\nAñadido con éxito!");
+                                    } catch (Exception e) {
+                                        System.out.println("Hubo un error añadiendo al médico\nIntente de nuevo");
+                                    }
+                                    break;
+                                case 2:
+                                    continue;
+                                default:
+                                    break;
+                            }
                             break;
                         case 6://eliminar entrenador
+                            System.out.println("Este es el listado de entrenadores de "+ek.getNombre()+" ...");
+                            entrenadores = ek.getLstEntrenadores();
+                            if(entrenadores.size()>0){
+                                for (Coach coach : entrenadores) {
+                                    System.out.println("ID: "+coach.getId()+" "+"Nombre: "+coach.getNombre()+" "+coach.getApellido()+"\nEdad: "+coach.getEdad()+"\nFederacion: "+coach.getIdFederacion());
+                                }
+                            }else{
+                                System.out.println("No hay entrenadores registrados !!!");
+                            }
+                            contador = 0;
+                            while (contador!=-1) {
+                                System.out.println("Ingrese el ID del entrenador que desea eliminar: ");
+                                int delCoach = scanner.nextInt();
+                                int idxCoach;
+                                for (Coach coach : entrenadores) {
+                                    if(coach.getId()==delCoach){
+                                        idxCoach = entrenadores.indexOf(coach);
+                                        try {
+                                            entrenadores.remove(idxCoach);
+                                            System.out.println("Entrenador eliminado con éxito! ");
+                                            contador = -1;
+                                            break;
+                                            
+                                        } catch (Exception e) {
+                                            System.out.println("Hubo algún error, verifique los datos e intente de nuevo.");
+                                        }
+                                    }
+                                }
+
+                            }
                             break;
                         case 7://eliminar jugador
+                            System.out.println("Este es el listado de jugadores de "+ek.getNombre()+" ...");
+                            jugadores = ek.getLstJugadores();
+                            if(jugadores.size()>0){
+                                for (Player jugador : jugadores) {
+                                    System.out.println("JUGADOR ID: # "+jugador.getId()+"\n"+jugador.getNombre()+" "+jugador.getApellido()+"\nEdad: "+jugador.getEdad()+"\nPosición: "+jugador.getPosicion()+"\nDorsal: "+jugador.getDorsal());
+                                }
+                            }else{
+                                System.out.println("No hay jugadores registrados !!!");
+                            }
+                            contador = 0;
+                            while (contador!=-1) {
+                                System.out.println("Ingrese el ID del jugador que desea eliminar: ");
+                                int delPlayer = scanner.nextInt();
+                                int idxPlayer;
+                                for (Player player : jugadores) {
+                                    if (player.getId()==delPlayer) {
+                                        idxPlayer = jugadores.indexOf(player);
+                                        try {
+                                            jugadores.remove(idxPlayer);
+                                            System.out.println("Jugador eliminado con éxito.");
+                                            contador=-1;
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Ocurrió un error, intente de nuevo.");
+                                            contador=-1;
+                                        }
+                                    }
+                                }
+                            }
                             break;
                         case 8: //eliminar masajista
+                            System.out.println("Esta es la plantilla de médicos de "+ek.getNombre()+" ...");
+                            medicos = ek.getLstMasajistas();
+                            if (medicos.size()>0) {
+                                for (Doctor doctor : medicos) {
+                                    System.out.println("MEDICO ID #: "+doctor.getId()+"\nNombre: "+doctor.getNombre()+" "+doctor.getApellido()+"\nTítulo: "+doctor.getTitulo());
+                                }
+                            }else{
+                                System.out.println("No hay médicos registrados !!!");
+                            }
+                            contador = 0;
+                            while(contador!=-1){
+                                System.out.println("Ingrese el ID del médico que desea eliminar: ");
+                                int delMedico = scanner.nextInt();
+                                int idxMedico;
+                                for (Doctor doctor : medicos) {
+                                    if (doctor.getId()==delMedico) {
+                                        idxMedico = medicos.indexOf(doctor);
+                                        try {
+                                            medicos.remove(idxMedico);
+                                            System.out.println("Médico eliminado con éxito.");contador = -1;
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Ocurrió un error, intente de nuevo.");
+                                            contador=-1;
+                                        }
+                                    }
+                                }
+                            }
                             break;
                         default:
                             break;
