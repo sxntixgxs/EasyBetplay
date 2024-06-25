@@ -2,11 +2,10 @@ package com.soccer;
 
 import java.util.Scanner;
 
-import com.soccer.view.viewPlayer;
-import com.soccer.view.viewTeam;
+import com.soccer.view.*;
 
 public class Main {
-    public static void menuPrincipal(viewTeam, viewPlayer){
+    public static void menuPrincipal(ViewTeam viewTeam,ViewPlayer viewPlayer){
         boolean flag = true;
         Scanner sc = new Scanner(System.in);
         while(flag){
@@ -24,18 +23,20 @@ public class Main {
                     break;
             }
         }
+        sc.close();
     }
     public static void main(String[] args) {
         Controller ctrlTeams = new Controller();
         Controller ctrlPlayers = new Controller();
 
-        viewTeam.controlador = ctrlTeams;
-        viewTeam vt = new viewTeam();
-        
-        viewPlayer.controlador = ctrlPlayers;
-        viewPlayer vp = new viewPlayer();
+        ViewTeam vt = new ViewTeam();
+        ViewTeam.controlador = ctrlTeams;
 
-        menuPrincipal(viewTeam,viewPlayer);
+        ViewPlayer vp = new ViewPlayer();
+        ViewPlayer.controlador = ctrlPlayers;
+
+
+        menuPrincipal(vt,vp);
 
 
        // System.out.println("Jugador"+ eq.getLstJugadores().get(0).getNombre());

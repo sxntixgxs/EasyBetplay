@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.soccer.model.entity.*;
 import com.soccer.Controller;
 
-public class viewTeam {
+public class ViewTeam {
     public static Controller controlador;
     public void start() {
         Scanner scanner = new Scanner(System.in);

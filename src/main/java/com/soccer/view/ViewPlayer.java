@@ -6,7 +6,7 @@ import com.soccer.model.entity.Player;
 import com.soccer.model.entity.Team;
 import com.soccer.Controller;
 
-public class viewPlayer {
+public class ViewPlayer {
        public static Controller controlador;
        public List<Player> lstJugadores = new ArrayList<>();//lista global de jugadores
        public void start(){
@@ -24,7 +24,7 @@ public class viewPlayer {
                      scanner.nextInt();
 
                      switch (choice) {
-                            case 1:
+                            case 1://registrar jugador
                             
                                    int id = random.nextInt();
                                    System.out.println("Registro jugador ...");
@@ -66,8 +66,17 @@ public class viewPlayer {
 
 
                                    break;
+                            case 2://actualizar jugador
+                                   System.out.println("Modificando jugador ...");
+                                   System.out.println("Ingrese el id del jugador a modificar ...");
+                                   for (Player player : lstJugadores) {
+                                          System.out.println(player.getNombre()+" "+player.getApellido()+"\nEdad: "+player.getEdad()+"\nEdad: "+player.getEdad());//CREAR CLASE JUGADORACTIVO que extiende player y su atributo adicional sería equipo!!!!);
+                                          //Principio responsabilidad unica, vender jugador, eliminar jugador, etc son clases indptes
+                                   }
+                                   break;
+
                      
-                            default:
+                            case 6:
                                    break;
                      }
                      scanner.close();
